@@ -13,6 +13,7 @@
 #include "External/ImGui/backends/imgui_impl_sdl2.h"
 #include "External/ImGui/backends/imgui_impl_opengl3.h"
 #include "External/ImGuizmo/include/ImGuizmo.h"
+#include "External/ImGuiTextEditor/include/TextEditor.h"
 
 #include "NodeEditor.h"
 
@@ -150,6 +151,7 @@ public:
 	bool showFileExplorer = true;
 	bool showAssets = true;
 	bool showLibrary = true;
+	bool showTextEditor = true; 
 
 	bool showNodeEditor = false;
 
@@ -225,6 +227,10 @@ public:
 
 	// Node Editor
 	NodeEditorWindow nodeEditor;
+
+	// Text editor
+	TextEditor textEditor; 
+	std::string textName; 
 
 };
 
