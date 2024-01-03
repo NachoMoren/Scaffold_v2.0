@@ -82,6 +82,22 @@ void CMesh::OnInspector()
 
         }
 
+        ImGui::Spacing();
+
+        if (ImGui::CollapsingHeader("Shaders", flags)) {
+
+            ImGui::Indent();
+
+            ImGui::Spacing();
+
+            ImGui::Text("Current shader program: %s", meshReference->meshShader.shaderProgramPath.c_str());
+
+            ImGui::Button("Drop shader program", ImVec2(200, 50));
+            ShaderDragDropTarget();
+
+            ImGui::Unindent();
+        }
+
         ImGui::Unindent();
     }
 }
@@ -91,6 +107,33 @@ void CMesh::YmeshDragDropTarget()
     if (ImGui::BeginDragDropTarget())
     {
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ymesh"))
+        {
+            std::string* libraryFilePathDrop = (std::string*)payload->Data;
+
+            if (meshReference != nullptr) {
+
+                //External->resourceManager->UnloadResource(meshReference->GetUID());
+
+                meshReference = nullptr;
+
+            }
+
+            // Retrieve name of the file dropped, and then get the UID.
+
+            // Lastly, Request Resource of the Mesh with given UID, Path and Type and render it (add a reference).
+
+        }
+
+        ImGui::EndDragDropTarget();
+    }
+}
+
+void CMesh::ShaderDragDropTarget()
+{
+
+    if (ImGui::BeginDragDropTarget())
+    {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("shader"))
         {
             std::string* libraryFilePathDrop = (std::string*)payload->Data;
 

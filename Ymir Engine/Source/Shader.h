@@ -66,6 +66,7 @@ public:
 
     // Shader Program Identificator (ID)
     GLuint shaderProgram;
+    std::string shaderProgramPath;
 
     float3 translation = { 0, 0, 0 };
     float3 rotation = { 0,0,0 };

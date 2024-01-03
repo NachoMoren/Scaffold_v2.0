@@ -10,11 +10,15 @@ Shader::Shader()
 	shaderProgram = 0;
 	normalMap = false;
 	selected = false;
+
+	shaderProgramPath = SHADER_VS_FS;
 }
 
 Shader::Shader(const std::string& vertexShaderPath, const std::string& fragmentShaderPath)
 {
 	shaderProgram = 0;
+
+	shaderProgramPath = SHADER_VS_FS;
 
 	LoadShader(vertexShaderPath, fragmentShaderPath);
 }

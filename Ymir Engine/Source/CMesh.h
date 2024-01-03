@@ -4,6 +4,8 @@
 #include "Globals.h"
 #include "Mesh.h"
 
+
+
 class CMesh : public Component {
 public:
 
@@ -17,6 +19,8 @@ public:
 	void OnInspector() override;
 
 	void YmeshDragDropTarget();
+
+	void ShaderDragDropTarget();
 
 public:
 
