@@ -2875,11 +2875,12 @@ void ModuleEditor::DrawLibraryWindow(const std::string& libraryFolder) {
 }
 
 void ModuleEditor::DrawTextEditor() {
+    bool openPopUp = false; 
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("File")) {
-            if (ImGui::MenuItem("Open")) {
-                //Load file
-
+            if (ImGui::MenuItem("Open", NULL)) {
+               
+                openPopUp = true; 
             }
             if (ImGui::MenuItem("Save")) {
                 //Save file
@@ -2949,6 +2950,27 @@ void ModuleEditor::DrawTextEditor() {
         ImGui::EndMenuBar();
     }
 
+    if (openPopUp == true) {
+        ImGui::OpenPopup("Introduce file name");
+        openPopUp = false;
+    }
+    if (ImGui::BeginPopupModal("Introduce file name")) {
+        static char buffer[50] = ".glsl";
+        ImGui::InputText("##File Name", buffer, sizeof(buffer));
+
+        if (ImGui::Button("Open", ImVec2(80, 0))) {
+            //Introduce here load 
+            LoadShader(buffer);
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel", ImVec2(80,0))) {
+            ImGui::CloseCurrentPopup();
+        }
+        
+        ImGui::EndPopup();
+    }
+
     textEditor.Render("TextEditor");
 }
 
@@ -2973,6 +2995,24 @@ void ModuleEditor::SaveShader(std::string data, std::string fileName) {
     tempShader->LoadShader(path);
     delete tempShader; 
 
+}
+
+void ModuleEditor::LoadShader(std::string fileName) {
+    std::ifstream file;
+    std::string filePath = "Assets/Shaders/" + fileName;
+
+    file.open(filePath);
+
+    if (!file.is_open()) {
+        LOG("Error: Unable to open file: %s", filePath);
+    }
+
+    std::string fileContents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
+    file.close();
+    textName = std::filesystem::path(filePath).stem().string();
+
+    textEditor.SetText(fileContents);
 }
 // Function to handle Mouse Picking
 void ModuleEditor::MousePickingManagement(const ImVec2& mousePosition, const ImVec2& sceneWindowPos, const ImVec2& sceneWindowSize, const float& sceneFrameHeightOffset) {
