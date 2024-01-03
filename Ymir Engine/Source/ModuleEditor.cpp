@@ -460,7 +460,7 @@ void ModuleEditor::DrawEditor()
 
             }
 
-            if (ImGui::MenuItem("Text Editor")) {
+            if (ImGui::MenuItem("Shader Editor")) {
 
                 showTextEditor = true; 
 
@@ -1312,71 +1312,8 @@ ImGui::End();
 
     if (showTextEditor) {
         if (ImGui::Begin("Text Editor", &showTextEditor, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_MenuBar)) {
-            if (ImGui::BeginMenuBar()) {
-                if (ImGui::BeginMenu("File")) {
-                    if (ImGui::MenuItem("Save")) {
-                        //Save file
-                    }
-                    if (ImGui::MenuItem("Quit", "Alt-F4")) {
-                        //Close current file, then hide editor
-                        showTextEditor = false; 
-                    }
-                    ImGui::EndMenu();
-                }
-
-                if (ImGui::BeginMenu("Edit")) {
-                    bool readOnly = textEditor.IsReadOnly();
-                    if (ImGui::MenuItem("Read-only", nullptr, &readOnly)) {
-                        textEditor.SetReadOnly(readOnly);
-                    }
-                    ImGui::Separator();
-                    //Undo-Redo
-                    if (ImGui::MenuItem("Undo", "Ctrl-Z", nullptr, !readOnly && textEditor.CanUndo())) {
-                        textEditor.Undo();
-                    }
-
-                    if (ImGui::MenuItem("Redo", "Ctrl-Y", nullptr, !readOnly && textEditor.CanRedo())) {
-                        textEditor.Redo();
-                    }
-
-                    ImGui::Separator();
-                    //Copy/Paste shortcuts
-                    if (ImGui::MenuItem("Copy", "Ctrl-C", nullptr, textEditor.HasSelection())) {
-                        textEditor.Copy();
-                    }
-                       
-                    if (ImGui::MenuItem("Cut", "Ctrl-X", nullptr, !readOnly && textEditor.HasSelection())) {
-                        textEditor.Cut();
-                    }
-                        
-                    if (ImGui::MenuItem("Delete", "Del", nullptr, !readOnly && textEditor.HasSelection())) {
-                        textEditor.Delete();
-                    }
-
-                    if (ImGui::MenuItem("Paste", "Ctrl-V", nullptr, !readOnly && ImGui::GetClipboardText() != nullptr)) {
-                        textEditor.Paste();
-                    }
-
-                    if (ImGui::MenuItem("Select all", nullptr, nullptr)) {
-                        textEditor.SetSelection(TextEditor::Coordinates(), TextEditor::Coordinates(textEditor.GetTotalLines(), 0));
-                    }
-                       
-                    ImGui::EndMenu();
-                }
-
-                if (ImGui::BeginMenu("View"))
-                {
-                    if (ImGui::MenuItem("Dark palette"))
-                        textEditor.SetPalette(TextEditor::GetDarkPalette());
-                    if (ImGui::MenuItem("Light palette"))
-                        textEditor.SetPalette(TextEditor::GetLightPalette());
-                    if (ImGui::MenuItem("Retro blue palette"))
-                        textEditor.SetPalette(TextEditor::GetRetroBluePalette());
-                    ImGui::EndMenu();
-                }
-                ImGui::EndMenuBar();
-            }
-            textEditor.Render("TextEditor");
+            
+            DrawTextEditor();
         }
         ImGui::End();
     }
@@ -2937,6 +2874,106 @@ void ModuleEditor::DrawLibraryWindow(const std::string& libraryFolder) {
 
 }
 
+void ModuleEditor::DrawTextEditor() {
+    if (ImGui::BeginMenuBar()) {
+        if (ImGui::BeginMenu("File")) {
+            if (ImGui::MenuItem("Open")) {
+                //Load file
+
+            }
+            if (ImGui::MenuItem("Save")) {
+                //Save file
+                std::string str = textEditor.GetText();
+                char* charStr = &str[0];
+                SaveShader(charStr, "customShader");
+            }
+            if (ImGui::MenuItem("Quit", "Alt-F4")) {
+                //Close current file, then hide editor
+                textEditor.SetSelection(TextEditor::Coordinates(), TextEditor::Coordinates(textEditor.GetTotalLines(), 0));
+                textEditor.Delete();
+                showTextEditor = false;
+            }
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Edit")) {
+            bool readOnly = textEditor.IsReadOnly();
+            if (ImGui::MenuItem("Read-only", nullptr, &readOnly)) {
+                textEditor.SetReadOnly(readOnly);
+            }
+            ImGui::Separator();
+            //Undo-Redo
+            if (ImGui::MenuItem("Undo", "Ctrl-Z", nullptr, !readOnly && textEditor.CanUndo())) {
+                textEditor.Undo();
+            }
+
+            if (ImGui::MenuItem("Redo", "Ctrl-Y", nullptr, !readOnly && textEditor.CanRedo())) {
+                textEditor.Redo();
+            }
+
+            ImGui::Separator();
+            //Copy/Paste shortcuts
+            if (ImGui::MenuItem("Copy", "Ctrl-C", nullptr, textEditor.HasSelection())) {
+                textEditor.Copy();
+            }
+
+            if (ImGui::MenuItem("Cut", "Ctrl-X", nullptr, !readOnly && textEditor.HasSelection())) {
+                textEditor.Cut();
+            }
+
+            if (ImGui::MenuItem("Delete", "Del", nullptr, !readOnly && textEditor.HasSelection())) {
+                textEditor.Delete();
+            }
+
+            if (ImGui::MenuItem("Paste", "Ctrl-V", nullptr, !readOnly && ImGui::GetClipboardText() != nullptr)) {
+                textEditor.Paste();
+            }
+
+            if (ImGui::MenuItem("Select all", nullptr, nullptr)) {
+                textEditor.SetSelection(TextEditor::Coordinates(), TextEditor::Coordinates(textEditor.GetTotalLines(), 0));
+            }
+
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("View"))
+        {
+            if (ImGui::MenuItem("Dark palette"))
+                textEditor.SetPalette(TextEditor::GetDarkPalette());
+            if (ImGui::MenuItem("Light palette"))
+                textEditor.SetPalette(TextEditor::GetLightPalette());
+            if (ImGui::MenuItem("Retro blue palette"))
+                textEditor.SetPalette(TextEditor::GetRetroBluePalette());
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }
+
+    textEditor.Render("TextEditor");
+}
+
+void ModuleEditor::SaveShader(std::string data, std::string fileName) {
+    std::string path = "Assets/Shaders/" + fileName + ".glsl";
+
+    std::ofstream file(path);
+
+    if (file.is_open()) {
+        file << data; 
+        file.close();
+        if (!file) {
+            std::cerr << "Failed to close file: " << fileName << std::endl;
+        }
+    }
+    else {
+        //Check exceptions
+        std::cerr << "Unable to open file: " << fileName << std::endl;
+    }
+
+    Shader* tempShader = new Shader();
+    tempShader->LoadShader(path);
+    delete tempShader; 
+
+}
 // Function to handle Mouse Picking
 void ModuleEditor::MousePickingManagement(const ImVec2& mousePosition, const ImVec2& sceneWindowPos, const ImVec2& sceneWindowSize, const float& sceneFrameHeightOffset) {
 

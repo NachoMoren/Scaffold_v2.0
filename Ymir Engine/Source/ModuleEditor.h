@@ -125,6 +125,10 @@ public:
 	// Function to draw Library Window
 	void DrawLibraryWindow(const std::string& libraryFolder);
 
+	void DrawTextEditor();
+
+	void SaveShader(std::string data, std::string fileName);
+
 	// Function to handle Mouse Picking
 	void MousePickingManagement(const ImVec2& mousePosition, const ImVec2& sceneWindowPos, const ImVec2& sceneWindowSize, const float& sceneFrameHeightOffset);
 
