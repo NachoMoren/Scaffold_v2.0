@@ -2876,6 +2876,7 @@ void ModuleEditor::DrawLibraryWindow(const std::string& libraryFolder) {
 
 void ModuleEditor::DrawTextEditor() {
     bool openPopUp = false; 
+    bool savePopUp = false; 
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("File")) {
             if (ImGui::MenuItem("Open", NULL)) {
@@ -2883,10 +2884,9 @@ void ModuleEditor::DrawTextEditor() {
                 openPopUp = true; 
             }
             if (ImGui::MenuItem("Save")) {
-                //Save file
-                std::string str = textEditor.GetText();
-                char* charStr = &str[0];
-                SaveShader(charStr, "customShader");
+                
+                savePopUp = true; 
+                
             }
             if (ImGui::MenuItem("Quit", "Alt-F4")) {
                 //Close current file, then hide editor
@@ -2950,17 +2950,20 @@ void ModuleEditor::DrawTextEditor() {
         ImGui::EndMenuBar();
     }
 
+
+    // Open popup
     if (openPopUp == true) {
-        ImGui::OpenPopup("Introduce file name");
+        ImGui::OpenPopup("Open");
         openPopUp = false;
     }
-    if (ImGui::BeginPopupModal("Introduce file name")) {
+    if (ImGui::BeginPopupModal("Open")) {
         static char buffer[50] = ".glsl";
         ImGui::InputText("##File Name", buffer, sizeof(buffer));
 
         if (ImGui::Button("Open", ImVec2(80, 0))) {
             //Introduce here load 
             LoadShader(buffer);
+            textName = buffer;
             ImGui::CloseCurrentPopup();
         }
         ImGui::SameLine();
@@ -2971,11 +2974,34 @@ void ModuleEditor::DrawTextEditor() {
         ImGui::EndPopup();
     }
 
+    // Save popup
+    if (savePopUp == true) {
+        ImGui::OpenPopup("Save");
+        openPopUp = false;
+    }
+    if (ImGui::BeginPopupModal("Save")) {
+        static char buffer[50] = ".glsl";
+        ImGui::InputText("##File Name", buffer, sizeof(buffer));
+
+        if (ImGui::Button("Save", ImVec2(80, 0))) {
+            //Introduce here load 
+            std::string str = textEditor.GetText();
+            char* charStr = &str[0];
+            SaveShader(charStr, buffer);
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel", ImVec2(80, 0))) {
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+
     textEditor.Render("TextEditor");
 }
 
 void ModuleEditor::SaveShader(std::string data, std::string fileName) {
-    std::string path = "Assets/Shaders/" + fileName + ".glsl";
+    std::string path = "Assets/Shaders/" + fileName;
 
     std::ofstream file(path);
 
