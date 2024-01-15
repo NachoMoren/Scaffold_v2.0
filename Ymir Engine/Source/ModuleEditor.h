@@ -131,6 +131,10 @@ public:
 
 	bool LoadShader(std::string fileName);
 
+	bool CheckFile(std::string fileName);
+
+	void ApplyCustomShader(std::string fileName);
+
 	// Function to handle Mouse Picking
 	void MousePickingManagement(const ImVec2& mousePosition, const ImVec2& sceneWindowPos, const ImVec2& sceneWindowSize, const float& sceneFrameHeightOffset);
 

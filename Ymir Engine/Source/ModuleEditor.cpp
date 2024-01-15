@@ -2877,8 +2877,8 @@ void ModuleEditor::DrawLibraryWindow(const std::string& libraryFolder) {
 void ModuleEditor::DrawTextEditor() {
     bool openPopUp = false; 
     bool savePopUp = false; 
-
-    TextEditor::ErrorMarkers markers;    
+    bool loadPopUp = false; 
+  
 
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("File")) {
@@ -2890,6 +2890,11 @@ void ModuleEditor::DrawTextEditor() {
                 
                 savePopUp = true; 
                 
+            }
+            if (ImGui::MenuItem("Load")) {
+
+                loadPopUp = true; 
+
             }
             if (ImGui::MenuItem("Quit", "Alt-F4")) {
                 //Close current file, then hide editor
@@ -3014,7 +3019,36 @@ void ModuleEditor::DrawTextEditor() {
         ImGui::EndPopup();
     }
 
-    textEditor.SetErrorMarkers(markers);
+    // Load shader popup
+    if (loadPopUp == true) {
+        ImGui::OpenPopup("Load");
+        loadPopUp = false; 
+    }
+
+    if (ImGui::BeginPopupModal("Load")) {
+        static char buffer[50] = ".glsl";
+        ImGui::InputText("##File Name", buffer, sizeof(buffer));
+
+        if (ImGui::Button("Load", ImVec2(80, 0))) {
+            //Introduce here load 
+            if (CheckFile(buffer)) {
+
+                ApplyCustomShader(buffer);
+                ImGui::CloseCurrentPopup();
+            }
+            else {
+                SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Scaffold v2.0", "File don't exist", App->window->window);
+            }
+
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel", ImVec2(80, 0))) {
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::EndPopup();
+
+    }
     textEditor.Render("TextEditor");
 }
 
@@ -3059,6 +3093,31 @@ bool ModuleEditor::LoadShader(std::string fileName) {
 
     textEditor.SetText(fileContents);
     return true;
+}
+
+bool ModuleEditor::CheckFile(std::string fileName) {
+    std::ifstream file;
+    std::string filePath = "Assets/Shaders/" + fileName;
+
+    file.open(filePath);
+
+    if (!file.is_open()) {
+        LOG("Error: Unable to open file: %s", filePath);
+        return false;
+    }
+    file.close();
+
+    return true; 
+}
+
+void ModuleEditor::ApplyCustomShader(std::string fileName) {
+    std::string filePath = "Assets/Shaders/" + fileName; 
+
+    for (auto it = External->renderer3D->models.begin(); it != External->renderer3D->models.end(); it++) {
+        for (auto jt = it->meshes.begin(); jt != it->meshes.end(); jt++) {
+            (*jt).meshShader.LoadShader(filePath);
+        }
+    }
 }
 // Function to handle Mouse Picking
 void ModuleEditor::MousePickingManagement(const ImVec2& mousePosition, const ImVec2& sceneWindowPos, const ImVec2& sceneWindowSize, const float& sceneFrameHeightOffset) {
