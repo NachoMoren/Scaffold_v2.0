@@ -23,6 +23,7 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vec
 
     enableVertexNormals = false;
     enableFaceNormals = false;
+    loadShaders = false; 
     loadedTextures = false;
     applyCheckerTexture = false;
     addedMaterialComponent = false;
@@ -78,6 +79,7 @@ void Mesh::DrawMesh()
                     CMaterial* cmaterial = new CMaterial(meshGO);
                     cmaterial->path = (*it).path;
                     cmaterial->ID = (*it).ID;
+                    cmaterial->shader = &meshShader;
                     meshGO->AddComponent(cmaterial);
 
                     addedMaterialComponent = true;
@@ -107,6 +109,7 @@ void Mesh::DrawMesh()
                     CMaterial* cmaterial = new CMaterial(meshGO);
                     cmaterial->path = (*it).path;
                     cmaterial->ID = (*it).ID;
+                    cmaterial->shader = &meshShader;
                     meshGO->AddComponent(cmaterial);
 
                     addedMaterialComponent = true;
@@ -117,11 +120,17 @@ void Mesh::DrawMesh()
 
         }
         
-        meshShader.LoadShader(SHADER_VS_FS);
+       
+        
 
         loadedTextures = true;
         applyCheckerTexture = false;
 
+    }
+
+    if (!loadShaders) {
+        meshShader.LoadShader(SHADER_VS_FS);
+        loadShaders = true;
     }
 
     meshShader.normalMap = showNormalMap;

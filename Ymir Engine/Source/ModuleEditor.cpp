@@ -2877,6 +2877,9 @@ void ModuleEditor::DrawLibraryWindow(const std::string& libraryFolder) {
 void ModuleEditor::DrawTextEditor() {
     bool openPopUp = false; 
     bool savePopUp = false; 
+
+    TextEditor::ErrorMarkers markers;    
+
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("File")) {
             if (ImGui::MenuItem("Open", NULL)) {
@@ -2955,16 +2958,21 @@ void ModuleEditor::DrawTextEditor() {
     if (openPopUp == true) {
         ImGui::OpenPopup("Open");
         openPopUp = false;
-    }
+    } 
     if (ImGui::BeginPopupModal("Open")) {
         static char buffer[50] = ".glsl";
         ImGui::InputText("##File Name", buffer, sizeof(buffer));
 
         if (ImGui::Button("Open", ImVec2(80, 0))) {
             //Introduce here load 
-            LoadShader(buffer);
-            textName = buffer;
-            ImGui::CloseCurrentPopup();
+            if (LoadShader(buffer)) {
+                textName = buffer;
+                ImGui::CloseCurrentPopup();
+            }
+            else {
+                SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Scaffold v2.0", "File don't exist", App->window->window);
+            }
+
         }
         ImGui::SameLine();
         if (ImGui::Button("Cancel", ImVec2(80,0))) {
@@ -2988,6 +2996,15 @@ void ModuleEditor::DrawTextEditor() {
             std::string str = textEditor.GetText();
             char* charStr = &str[0];
             SaveShader(charStr, buffer);
+
+            //Apply shader to meshes inside from editor
+
+            for (auto it = External->renderer3D->models.begin(); it != External->renderer3D->models.end(); it++) {
+                for (auto jt = it->meshes.begin(); jt != it->meshes.end(); jt++) {
+                    (*jt).loadShaders = false; 
+                }
+            }
+
             ImGui::CloseCurrentPopup();
         }
         ImGui::SameLine();
@@ -2997,6 +3014,7 @@ void ModuleEditor::DrawTextEditor() {
         ImGui::EndPopup();
     }
 
+    textEditor.SetErrorMarkers(markers);
     textEditor.Render("TextEditor");
 }
 
@@ -3023,7 +3041,7 @@ void ModuleEditor::SaveShader(std::string data, std::string fileName) {
 
 }
 
-void ModuleEditor::LoadShader(std::string fileName) {
+bool ModuleEditor::LoadShader(std::string fileName) {
     std::ifstream file;
     std::string filePath = "Assets/Shaders/" + fileName;
 
@@ -3031,6 +3049,7 @@ void ModuleEditor::LoadShader(std::string fileName) {
 
     if (!file.is_open()) {
         LOG("Error: Unable to open file: %s", filePath);
+        return false;
     }
 
     std::string fileContents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
@@ -3039,6 +3058,7 @@ void ModuleEditor::LoadShader(std::string fileName) {
     textName = std::filesystem::path(filePath).stem().string();
 
     textEditor.SetText(fileContents);
+    return true;
 }
 // Function to handle Mouse Picking
 void ModuleEditor::MousePickingManagement(const ImVec2& mousePosition, const ImVec2& sceneWindowPos, const ImVec2& sceneWindowSize, const float& sceneFrameHeightOffset) {

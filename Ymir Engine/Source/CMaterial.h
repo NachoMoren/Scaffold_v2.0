@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "Shader.h"
 
 #include "Globals.h"
 #include <string>
@@ -22,6 +23,7 @@ public:
 	void DdsDragDropTarget();
 
 public:
+	Shader* shader; 
 
 	uint ID;
 	std::string path;

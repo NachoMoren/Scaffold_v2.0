@@ -64,6 +64,8 @@ public:
     bool enableVertexNormals;
     bool enableFaceNormals;
 
+    bool loadShaders; 
+
     bool loadedTextures;
     bool applyCheckerTexture;
 
