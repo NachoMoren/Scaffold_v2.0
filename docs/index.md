@@ -45,7 +45,7 @@ We also added a simple water shader as an example of how one could use the shade
 
 # Workflow video
 
-<video src="images/workflow.mp4" width="320" height="240" controls></video>
+<video src="images/workflow.mp4" width="1024" height="576" controls></video>
 
 # License
 
