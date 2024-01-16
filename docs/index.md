@@ -39,7 +39,7 @@ The time management system makes it possible to start/stop/pause a simulation th
 
 # Workflow video
 
-![Workflow Video]([https://github.com/francesctr4/Ymir-Engine/assets/99948892/c450f2a6-32ca-4ede-a089-2ea709d22eb7](https://github.com/NachoMoren/Scaffold_v2.0/blob/main/docs/images/video.mkv))
+![Workflow Video](https://github.com/NachoMoren/Scaffold_v2.0/blob/main/docs/images/video.mkv)
 
 # License
 
