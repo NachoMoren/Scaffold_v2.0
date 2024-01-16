@@ -1,35 +1,25 @@
-# Ymir Engine
+# Scaffold Engine 2.0
 
-### Repository Link: [Ymir Engine](https://github.com/francesctr4/Ymir-Engine)
+### Repository Link: [Scaffold Engine v2.0](https://github.com/NachoMoren/Scaffold_v2.0)
 
-### Current release version: v0.2 - Engine Editor
+### Current release version: v0.3 - Engine Editor
 
 ### GitHub page: (In Progress)
 
 ## Description
 
-Ymir Engine is part of the Game Engines subject, on the third year of the Videogame Design and Development degree, 
-taught at CITM UPC (Terrassa) and supervised by [Miquel Suau](https://github.com/MayKoder).
+Scaffold is a 3D game engine that's being developed as didactic purpose for the 'Game Engines' subject in CITM Bachelor's degree in Video Game Design and Development.
 
-The engine has been made from scratch in C++ using SDL and OpenGL to manage graphics. The main target of the project is to
-be able to integrate complex systems such as graphics management and game engine architecture in a simple and understandable way
-for educational purposes.
-
-<img src="https://github.com/francesctr4/Ymir-Engine/assets/99948892/d686ac0f-9cc2-43b1-b6dd-1682679b1617" alt="YmirEngineLogo" width="400" height="400"/>
-
-_Ymir Engine Logo_
+This current version of the engine was forked from **Ymir Engine** [ScaffolYmird Engine](https://github.com/francesctr4/Ymir-Engine), in order to focus on the third assigment.
+You can check our main repository **here:** [Scaffold Engine](https://github.com/NachoMoren/Scaffold).
 
 ## Team Members
 
 _**Francesc Teruel Rodríguez**_
-* **GitHub:** [francesctr4](https://github.com/francesctr4)
+* **GitHub:** [Nacho Moreno](https://github.com/NachoMoren)
 
 _**Joel Romero Botella**_
-* **GitHub:** [Joeltecke25](https://github.com/Joeltecke25)
-
-## Disclaimer
-
-- The Release build may weigh a little (1.612 KB) because of the .fbx stored in the Assets folder (Debug build weighs 6.243 KB).
+* **GitHub:** [Biel Rubio](https://github.com/BielRubio)
 
 ## Instructions
 
