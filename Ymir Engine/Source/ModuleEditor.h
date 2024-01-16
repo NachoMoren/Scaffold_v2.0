@@ -135,6 +135,8 @@ public:
 
 	void ApplyCustomShader(std::string fileName);
 
+	void ApplySingleCustomShader(std::string fileName);
+
 	// Function to handle Mouse Picking
 	void MousePickingManagement(const ImVec2& mousePosition, const ImVec2& sceneWindowPos, const ImVec2& sceneWindowSize, const float& sceneFrameHeightOffset);
 
@@ -164,6 +166,8 @@ public:
 	bool showTextEditor = true; 
 
 	bool showNodeEditor = false;
+
+	bool isBlocked = false; 
 
 	// OpenGL settings checkbox toggle booleans
 	bool gl_DepthTesting = true;

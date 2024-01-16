@@ -18,6 +18,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	editorCamera->SetPos(-36.0f, 48.00f, 100.0f);
 	editorCamera->LookAt(float3(0.f, 0.f, 0.f));
 	editorCamera->SetAspectRatio(SCREEN_WIDTH/SCREEN_HEIGHT);
+	isBlocked = false;
 
 	LOG("Creating ModuleCamera3D");
 
@@ -52,40 +53,42 @@ update_status ModuleCamera3D::Update(float dt)
 
 	float speed = 20.0f * dt;
 
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 2;
+	if (!isBlocked) {
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 2;
 
-	// Mouse wheel Zoom In and Zoom Out handling
+		// Mouse wheel Zoom In and Zoom Out handling
 
-	editorCamera->ZoomHandling(newPos, speed);
+		editorCamera->ZoomHandling(newPos, speed);
 
-	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT) {
+		if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT) {
 
-		// Mouse wheel pressed while dragging movement handling
+			// Mouse wheel pressed while dragging movement handling
 
-		editorCamera->PanHandling(newPos, speed, dt);
+			editorCamera->PanHandling(newPos, speed, dt);
 
-	}
+		}
 
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_IDLE) {
+		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_IDLE) {
 
-		// WASD Camera Movement Handling
+			// WASD Camera Movement Handling
 
-		editorCamera->MovementHandling(newPos, speed);
+			editorCamera->MovementHandling(newPos, speed);
 
-		// Camera Rotation Handling
+			// Camera Rotation Handling
 
-		editorCamera->RotationHandling(speed, dt);
+			editorCamera->RotationHandling(speed, dt);
 
-	}
-	
-	editorCamera->UpdatePos(newPos);
+		}
 
-	if ((App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) && App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_IDLE) {
+		editorCamera->UpdatePos(newPos);
 
-		// Center camera to 0,0,0 when pressing Left Alt
+		if ((App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) && App->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_IDLE) {
 
-		editorCamera->LookAt(float3(0.0f, 0.0f, 0.0f));
+			// Center camera to 0,0,0 when pressing Left Alt
 
+			editorCamera->LookAt(float3(0.0f, 0.0f, 0.0f));
+
+		}
 	}
 
 	return UPDATE_CONTINUE;

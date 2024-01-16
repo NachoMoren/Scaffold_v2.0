@@ -25,5 +25,6 @@ public:
 
 	CCamera* editorCamera;
 	LineSegment mousePickingRay;
+	bool isBlocked; 
 
 };

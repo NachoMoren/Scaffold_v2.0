@@ -1288,12 +1288,12 @@ ImGui::End();
             DrawGizmo(sceneWindowPos, sceneContentRegionMax, sceneFrameHeightOffset);
 
             // Mouse Picking Management
-
-            if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && !ImGuizmo::IsUsing())
-            {
-                MousePickingManagement(mousePosition, sceneWindowPos, sceneWindowSize, sceneFrameHeightOffset);
+            if (!isBlocked) {
+                if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && !ImGuizmo::IsUsing())
+                {
+                    MousePickingManagement(mousePosition, sceneWindowPos, sceneWindowSize, sceneFrameHeightOffset);
+                }
             }
-
             ImGui::End();
         }
 
@@ -2878,6 +2878,7 @@ void ModuleEditor::DrawTextEditor() {
     bool openPopUp = false; 
     bool savePopUp = false; 
     bool loadPopUp = false; 
+    bool loadCurrentPopUp = false; 
   
 
     if (ImGui::BeginMenuBar()) {
@@ -2891,11 +2892,18 @@ void ModuleEditor::DrawTextEditor() {
                 savePopUp = true; 
                 
             }
+            ImGui::Separator();
             if (ImGui::MenuItem("Load")) {
 
                 loadPopUp = true; 
 
             }
+            if (ImGui::MenuItem("Apply to current mesh")) {
+
+                loadCurrentPopUp = true;
+
+            }
+            ImGui::Separator();
             if (ImGui::MenuItem("Quit", "Alt-F4")) {
                 //Close current file, then hide editor
                 textEditor.SetSelection(TextEditor::Coordinates(), TextEditor::Coordinates(textEditor.GetTotalLines(), 0));
@@ -3049,6 +3057,42 @@ void ModuleEditor::DrawTextEditor() {
         ImGui::EndPopup();
 
     }
+
+    //Load shader to 1 mesh
+    if (loadCurrentPopUp == true) {
+        ImGui::OpenPopup("Apply to current mesh");
+        External->camera->isBlocked = true; 
+        isBlocked = true; 
+        loadCurrentPopUp = false; 
+    }
+
+    if (ImGui::BeginPopupModal("Apply to current mesh")) {
+        static char buffer[50] = ".glsl";
+        ImGui::InputText("##File Name", buffer, sizeof(buffer));
+
+        if (ImGui::Button("Apply to current mesh", ImVec2(80, 0))) {
+            //Introduce here load 
+            if (CheckFile(buffer)) {
+                //Apply shader to selected object
+                ApplySingleCustomShader(buffer);
+                External->camera->isBlocked = false;
+                isBlocked = false;
+                ImGui::CloseCurrentPopup();
+            }
+            else {
+                SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Scaffold v2.0", "File don't exist", App->window->window);
+            }
+
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel", ImVec2(80, 0))) {
+            External->camera->isBlocked = false;
+            isBlocked = false;
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+
     textEditor.Render("TextEditor");
 }
 
@@ -3119,6 +3163,20 @@ void ModuleEditor::ApplyCustomShader(std::string fileName) {
         }
     }
 }
+
+void ModuleEditor::ApplySingleCustomShader(std::string fileName) {
+    std::string filePath = "Assets/Shaders/" + fileName;
+
+    for (auto it = External->renderer3D->models.begin(); it != External->renderer3D->models.end(); it++) {
+        for (auto jt = it->meshes.begin(); jt != it->meshes.end(); jt++) {
+            if ((*jt).meshGO->selected) {
+                (*jt).meshShader.LoadShader(filePath);
+            }
+        }
+    }
+    //External->renderer3D->GetSelected().meshShader.LoadShader(filePath);
+}
+
 // Function to handle Mouse Picking
 void ModuleEditor::MousePickingManagement(const ImVec2& mousePosition, const ImVec2& sceneWindowPos, const ImVec2& sceneWindowSize, const float& sceneFrameHeightOffset) {
 
