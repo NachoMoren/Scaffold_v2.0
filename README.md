@@ -15,10 +15,10 @@ You can check our main repository **here:** [Scaffold Engine](https://github.com
 
 ## Team Members
 
-_**Francesc Teruel Rodríguez**_
+_**Ignacio Moreno Navarro**_
 * **GitHub:** [Nacho Moreno](https://github.com/NachoMoren)
 
-_**Joel Romero Botella**_
+_**Biel Rubio Dieste**_
 * **GitHub:** [Biel Rubio](https://github.com/BielRubio)
 
 ## Instructions

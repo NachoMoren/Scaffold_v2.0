@@ -5,6 +5,8 @@
 #include "Application.h"
 #include "ModuleEditor.h"
 
+
+
 Shader::Shader()
 {
 	shaderProgram = 0;
@@ -347,6 +349,10 @@ void Shader::SetShaderUniforms()
 	ToggleNormalMap(normalMap);
 
 	this->SetBool("selected", selected);
+
+	this->SetFloat("time", TimeManager::graphicsTimer.ReadSec());
+
+	this->SetFloat("speed", 1.0f);
 
 }
 
