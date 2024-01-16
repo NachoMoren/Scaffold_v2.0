@@ -39,6 +39,10 @@ The time management system makes it possible to start/stop/pause a simulation th
 
 # Workflow video
 
+<video width="320" height="240" controls>
+  <source src="images/video.mkv" type="video/mp4">
+</video>
+
 # License
 
 MIT License
