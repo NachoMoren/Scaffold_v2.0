@@ -3,7 +3,7 @@
 Scaffold is a 3D game engine that's being developed as didactic purpose for the 'Game Engines' subject in CITM Bachelor's degree in Video Game Design and Development.
 
 This current version of the engine was forked from **Ymir Engine** [Ymir Engine](https://github.com/francesctr4/Ymir-Engine), in order to focus on the third assigment.
-You can check our main repository **here:** [Scaffold Engine](https://github.com/NachoMoren/Scaffold).
+You can check our first repository **here:** [Scaffold Engine](https://github.com/NachoMoren/Scaffold).
     
 ****
 
@@ -41,7 +41,6 @@ The engine uses a shader pipeline to draw geometry. It has its own default shade
 We also added a simple water shader as an example of how one could use the shader editor.
 
 ![Water shader](images/WaterShader.png)
-![Text editor](images/TextEditor.png)
 ![Text editor unwrapped](images/TextEditorUnwrapped.png)
 
 # Workflow video
