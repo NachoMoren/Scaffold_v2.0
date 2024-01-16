@@ -184,7 +184,7 @@ bool ModuleRenderer3D::Init()
 
 	models.push_back(Model("Assets/Skybox/Skybox.fbx"));
 
-	models.push_back(Model("Assets/waterTile2.fbx"));
+	models.push_back(Model("Assets/WaterTile3.fbx"));
 
 	// Load Editor and Game FrameBuffers
 

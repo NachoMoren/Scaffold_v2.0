@@ -32,9 +32,9 @@ void main(){
 	
 	// Modify the position based on time and speed using sinusoidal functions
 
-	pos.y += 0.1 * sin(pos.y + (timer * 0.8));
-	pos.y += 0.2 * sin(pos.x * 0.5 + (timer * 2));
-	pos.y += 0.3 * sin(pos.y * 0.1 + (timer * 3));
+	pos.y += 0.2 * sin(pos.z + (timer * 0.8));
+	pos.y += 0.3 * sin(pos.x * 0.5 + (timer * 2));
+	pos.y += 0.4 * sin(pos.z * 0.1 + (timer * 3));
 	
 	// Send height and peak values to the fragment shader
 	
@@ -75,3 +75,6 @@ void main(){
 }
 
 #endif
+
+
+
