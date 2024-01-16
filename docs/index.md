@@ -40,7 +40,8 @@ The time management system makes it possible to start/stop/pause a simulation th
 The engine uses a shader pipeline to draw geometry. It has its own default shader that can be changed with a built in shader text editor that can modify and create new shaders, and apply them to individual GameObjects.
 We also added a simple water shader as an example of how one could use the shader editor.
 
- ![Shaders](/assets/images/WaterShader.png)
+ ![Water shader](images/WaterShader.png)
+ ![Text editor](images/TextEditor.png)
 
 # Workflow video
 
