@@ -39,6 +39,8 @@ The time management system makes it possible to start/stop/pause a simulation th
 
 # Workflow video
 
+![Workflow Video](https://github.com/NachoMoren/Scaffold_v2.0/blob/main/docs/images/video.mkv)
+
 # License
 
 MIT License
