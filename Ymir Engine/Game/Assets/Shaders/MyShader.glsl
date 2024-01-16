@@ -82,7 +82,7 @@ void main()
 
         if (selected) {
 
-            FragColor = AddOutline(mainTexture, vec4(1.0, 0.5, 0.0, 1.0), 0.2);
+            FragColor = AddOutline(mainTexture, vec4(1.0, 0.5, 1.0, 1.0), 0.2);
 
         }
 
@@ -90,3 +90,4 @@ void main()
 }
 
 #endif
+
