@@ -36,4 +36,4 @@ enum update_status
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
-#define TITLE "Ymir Engine"
+#define TITLE "Scaffold v2.0 Engine"

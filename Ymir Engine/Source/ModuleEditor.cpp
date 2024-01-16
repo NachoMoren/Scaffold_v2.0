@@ -2137,14 +2137,14 @@ void ModuleEditor::ShowDiskInfo()
 
 void ModuleEditor::AboutModalWindowContent()
 {
-    ImGui::Text("Ymir Engine v0.1");
+    ImGui::Text("Scaffold Engine v0.3");
 
     ImGui::NewLine();
 
     ImGui::SeparatorText("DESCRIPTION");
     ImGui::NewLine();
 
-    const char* engineInfo = "Ymir Engine is part of the Game Engines subject, on the third year of the\nVideogame Design and Development degree, taught at CITM UPC (Terrassa)\nand supervised by Miquel Suau.\n\nThe engine has been made from scratch in C++ using SDL and OpenGL to manage\ngraphics. The main target of the project is to be able to integrate complex\nsystems such as graphics management and game engine architecture in a simple\nand understandable way for educational purposes.";
+    const char* engineInfo = "Scaffold Engine is part of the Game Engines subject, on the third year of the\nVideogame Design and Development degree, taught at CITM UPC (Terrassa)\nand supervised by Miquel Suau.\n\nThe engine has been made from scratch in C++ using SDL and OpenGL to manage\ngraphics. The main target of the project is to be able to integrate complex\nsystems such as graphics management and game engine architecture in a simple\nand understandable way for educational purposes.";
 
     ImGui::Text("%s", engineInfo);
 
@@ -2155,19 +2155,19 @@ void ModuleEditor::AboutModalWindowContent()
 
     ImGui::Text("Francesc Teruel Rodriguez ->");
     ImGui::SameLine();
-    ImGui::TextColored(ImVec4(0.0f, 0.5f, 1.0f, 1.0f), "francesctr4");
+    ImGui::TextColored(ImVec4(0.0f, 0.5f, 1.0f, 1.0f), "NachoMoren");
     if (ImGui::IsItemClicked()) {
 
-        RequestBrowser("https://github.com/francesctr4");
+        RequestBrowser("https://github.com/NachoMoren");
 
     }
 
     ImGui::Text("Joel Romero Botella ->");
     ImGui::SameLine();
-    ImGui::TextColored(ImVec4(0.0f, 0.5f, 1.0f, 1.0f), "Joeltecke25");
+    ImGui::TextColored(ImVec4(0.0f, 0.5f, 1.0f, 1.0f), "BielRubio");
     if (ImGui::IsItemClicked()) {
 
-        RequestBrowser("https://github.com/Joeltecke25");
+        RequestBrowser("https://github.com/BielRubio");
 
     }
 
