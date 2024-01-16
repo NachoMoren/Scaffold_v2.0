@@ -129,7 +129,12 @@ void Mesh::DrawMesh()
     }
 
     if (!loadShaders) {
-        meshShader.LoadShader(SHADER_VS_FS);
+        if (this->meshGO->name == "pPlane3") {
+            meshShader.LoadShader("Assets/Shaders/WaterShader.glsl");
+        }
+        else {
+            meshShader.LoadShader(SHADER_VS_FS);
+        }
         loadShaders = true;
     }
 
