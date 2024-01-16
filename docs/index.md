@@ -1,56 +1,66 @@
-Hi, I am [Biel Rubio Dieste](https://github.com/BielRubio), an student in Videogame Design and Development in CITM.
-This repository was made for an assigment of research in the Project II class. The goal of said assigment was to Research a topic of the process of produciton of a videogame, in specific, the researh of how to implement an Audio Manager for a 2D RPG.
+# Scaffold
 
-# Table of Contents
+Scaffold is a 3D game engine that's being developed as didactic purpose for the 'Game Engines' subject in CITM Bachelor's degree in Video Game Design and Development.
 
-
-    - 1. Introduction
-    - 2. Spatial Audio
-          2.1 How it works?
-          2.2 In 2D Videogames
-    - 3. Track Playlist
-    - 4. References
+This current version of the engine was forked from **Ymir Engine** [Ymir Engine](https://github.com/francesctr4/Ymir-Engine), in order to focus on the third assigment.
+You can check our main repository **here:** [Scaffold Engine](https://github.com/NachoMoren/Scaffold).
     
 ****
 
-## Introduction
+# Developers
 
-## Spatial Audio
+_**Ignacio Moreno Navarro**_
+* **GitHub:** [Nacho Moreno](https://github.com/NachoMoren)
 
-Spatial audio is a technology that creates an immersive and realistic 3D sound experience. It uses advanced algorithms and sound processing techniques to replicate the way sound waves interact with our ears in the real world.
+_**Biel Rubio Dieste**_
+* **GitHub:** [Biel Rubio](https://github.com/BielRubio)
 
-The audio enhancement 3D audio image technique involves the manipulation of sound produced by speakers, surround speakers, or headphones. The audio placement is done above, below, or behind you, within this 3D dimensional space. Thus, the audio is engineered to give you a 3D touch with a deeper depth, height, and width to it. 
+# Main Core Sub-Systems
 
-![img2](https://github.com/BielRubio/AudioAndMusicManager/blob/main/docs/images/img2.JPG)
+**1. 3D Rendering**
 
-**1. How it works?**
+**2. Camera Culling**
 
-Spatial audio depends on DSP or Digital Signal Processing in which the analog data is converted into digital data to perform detailed analysis. Spatial audio mimics this process by creating audio that has similar differences in timing, intensity, and frequency for each ear. 
+The scene only renders objects that are within the camera frustum in order ti improve performance.
 
-The way the ear works is comparable to how spatial sound works. A few seconds pass after your right ear first hears a sound coming from the right before your left ear picks up the same sound.
+**3. Editor Docking**
 
-It can become challenging, though, when the delay is tied to the sound’s origin. To put it simply, when sound waves interact with bodies, the time and volume of the sound are impacted. The Head Related Transfer Function (HRTF), which is affected by the varied head orientation and ear anatomy, determines the audio perception delay. As a result, the brain records this information and tells you the sound’s direction of origin.
+Every window on the editor can be moved whenever you please so can have your workspace neat and clean.
 
-**2. In 2D Videogames**
+**4. GameObject & Component System**
 
-When it comes to 2D spaces, spatial audio done as the 3D counterpart is very rare to come across in videogames. The reason being that 2D games usually aren't mede in first person, so its not necessary for the player the know the location of an audio queue just by the sound. [CHECK REAL 2D SPATIAL AUDIO](https://webaudioapi.com/samples/spatialized/)
+Every entity that you create in the editor is a gameObject. This gameObject can have multiple Components that dicactes its behaviour, like its transformations, texture, mesh, etc...
 
-If, instead we choose to make the concept simplier, without incorporating binaural audio, we can consider two main options for implementing spatial audio:
+**5. Time Management**
 
-   **-First option.** 
-   Just play the sounds from the sources that appear on-screen.
-   
-   **-Second option.** 
-   Change the volume of the sound depending of how far the source is from the listener.
-   
-   ![img1](https://github.com/BielRubio/AudioAndMusicManager/blob/main/docs/images/img1.png)
-   
-## Track Playlist
+The time management system makes it possible to start/stop/pause a simulation that will also run other systems. The content played during this simulation will be the exact content played/displayed when the game is compiled and executed as a standalone application.
 
-A Track playlist is a list of music tracks of a level, each level will have their unique playlists, and each track can be played under the desired circumstances that the developer has choosen, for example:
+# Shader Pipeline
 
-When the state of the game changes to "Battling", the playlist will change the track to the choosen battle soundtrack of the stage.
+# Workflow video
 
-## References
+<video src="images/workflow.mp4" width="320" height="240" controls></video>
 
-https://www.genderlessvoice.com/what-is-spatial-audio/
+# License
+
+MIT License
+
+Copyright (c) 2023 Ignacio Moreno Navarro & Biel Rubio Dieste
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
